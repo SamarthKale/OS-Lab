@@ -1,0 +1,46 @@
+============================================
+ LAB 7: BANKER'S ALGORITHM
+============================================
+
+TOPIC: Deadlock Avoidance using Banker's Algorithm
+
+STEP 1 - Open terminal and navigate to this folder:
+  cd path/to/lab7_bankers
+
+STEP 2 - Open the file in nano (optional, already exists):
+  nano bankers.c
+
+STEP 3 - Compile the code:
+  gcc bankers.c -o bankers
+
+STEP 4 - Run the program:
+  ./bankers
+
+--------------------------------------------
+SAMPLE INPUT (5 processes, 3 resources):
+
+  Processes & Resources: 5 3
+
+  Allocation:
+  0 1 0
+  2 0 0
+  3 0 2
+  2 1 1
+  0 0 2
+
+  Max:
+  7 5 3
+  3 2 2
+  9 0 2
+  2 2 2
+  4 3 3
+
+  Available:
+  3 3 2
+
+EXPECTED OUTPUT:
+  Safe sequence: P1 P3 P4 P0 P2
+
+NOTE: If the state is unsafe, it prints "Not safe"
+      Enter all matrix values row by row, space separated.
+--------------------------------------------

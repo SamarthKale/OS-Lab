@@ -1,0 +1,31 @@
+============================================
+ LAB 6 - TASK 2: FILE I/O SYSTEM CALLS
+============================================
+
+TOPIC: File operations using open(), write(), close()
+
+STEP 1 - Open terminal and navigate to this folder:
+  cd path/to/lab6_task2_fileio
+
+STEP 2 - Open the file in nano (optional, already exists):
+  nano fileio.c
+
+STEP 3 - Compile the code:
+  gcc fileio.c -o fileio
+
+STEP 4 - Run the program:
+  ./fileio
+
+STEP 5 - Verify the output file was created:
+  cat fout.txt
+
+--------------------------------------------
+EXPECTED OUTPUT (terminal):
+  write(3, "Hehe from write call\n", 21) returned 21
+
+EXPECTED OUTPUT (fout.txt):
+  Hehe from write call
+
+NOTE: A file named fout.txt will be created
+      in the same folder after running.
+--------------------------------------------

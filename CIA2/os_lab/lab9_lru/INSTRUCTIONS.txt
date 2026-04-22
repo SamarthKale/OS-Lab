@@ -1,0 +1,40 @@
+============================================
+ LAB 9 - LRU PAGE REPLACEMENT
+============================================
+
+TOPIC: Least Recently Used Page Replacement Algorithm
+
+STEP 1 - Open terminal and navigate to this folder:
+  cd path/to/lab9_lru
+
+STEP 2 - Open the file in nano (optional, already exists):
+  nano lru.c
+
+STEP 3 - Compile the code:
+  gcc lru.c -o lru
+
+STEP 4 - Run the program:
+  ./lru
+
+--------------------------------------------
+SAMPLE INPUT:
+  Enter number of pages: 8
+  Enter page reference string: 1 2 3 4 1 2 5 1
+  Enter number of frames: 3
+
+EXPECTED OUTPUT (partial):
+  Page 1 -> 1 - -  (PF)
+  Page 2 -> 1 2 -  (PF)
+  Page 3 -> 1 2 3  (PF)
+  Page 4 -> 4 2 3  (PF)   <- replaces LRU page (1)
+  Page 1 -> 4 2 1  (PF)   <- replaces LRU page (3)
+  Page 2 -> 4 2 1  (Hit)
+  Page 5 -> 5 2 1  (PF)   <- replaces LRU page (4)
+  Page 1 -> 5 2 1  (Hit)
+
+  Total Page Faults = 6
+
+NOTE: PF = Page Fault (page not in memory, loaded)
+      Hit = Page already present in memory
+      LRU replaces the page not used for the longest time
+--------------------------------------------

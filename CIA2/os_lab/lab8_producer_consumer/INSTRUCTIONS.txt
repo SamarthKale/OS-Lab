@@ -1,0 +1,36 @@
+============================================
+ LAB 8: PRODUCER-CONSUMER PROBLEM
+============================================
+
+TOPIC: Circular Buffer with Producer and Consumer
+
+STEP 1 - Open terminal and navigate to this folder:
+  cd path/to/lab8_producer_consumer
+
+STEP 2 - Open the file in nano (optional, already exists):
+  nano producer_consumer.c
+
+STEP 3 - Compile the code:
+  gcc producer_consumer.c -o producer_consumer
+
+STEP 4 - Run the program:
+  ./producer_consumer
+
+--------------------------------------------
+MENU OPTIONS:
+  1 - Produce: Add an item to the buffer
+  2 - Consume: Remove an item from the buffer
+  3 - Display: Show current buffer contents
+  4 - Exit
+
+SAMPLE RUN:
+  Choose 1 -> Enter item: 10  -> Produced 10 at pos 0
+  Choose 1 -> Enter item: 20  -> Produced 20 at pos 1
+  Choose 3 -> Buffer: 10 20
+  Choose 2 -> Consumed 10 from pos 0
+  Choose 4 -> Exit
+
+NOTE: Buffer size is 5.
+      Prints "Full" if buffer is full.
+      Prints "Empty" if nothing to consume.
+--------------------------------------------
