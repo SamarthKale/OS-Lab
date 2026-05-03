@@ -1,34 +1,31 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <pthread.h>
-#include <unistd.h>
-#include <time.h>
+#include <semaphore.h>
 
-#define N 10
+#define MAX 5
 
-int buffer[N], in = 0, out = 0, count = 0;
-pthread_mutex_t mutex;
+int buffer[MAX];
+int in = 0, out = 0;
+
+sem_t empty, full, mutex;
 
 // Producer
 void* producer(void* arg)
 {
-    for(int i = 0; i < N; i++)
+    for (int i = 0; i < 10; i++)
     {
-        int item = rand() % 100;
+        int item = i + 1;
 
-        pthread_mutex_lock(&mutex);
-
-        while(count == N);  // wait if full
+        sem_wait(&empty);
+        sem_wait(&mutex);
 
         buffer[in] = item;
-        printf("Produced: %d\n", item);
+        printf("Produced: %d at %d\n", item, in);
 
-        in = (in + 1) % N;
-        count++;
+        in = (in + 1) % MAX;
 
-        pthread_mutex_unlock(&mutex);
-
-        sleep(1);
+        sem_post(&mutex);
+        sem_post(&full);
     }
     return NULL;
 }
@@ -36,21 +33,18 @@ void* producer(void* arg)
 // Consumer
 void* consumer(void* arg)
 {
-    for(int i = 0; i < N; i++)
+    for (int i = 0; i < 10; i++)
     {
-        pthread_mutex_lock(&mutex);
-
-        while(count == 0);  // wait if empty
+        sem_wait(&full);
+        sem_wait(&mutex);
 
         int item = buffer[out];
-        printf("Consumed: %d\n", item);
+        printf("Consumed: %d from %d\n", item, out);
 
-        out = (out + 1) % N;
-        count--;
+        out = (out + 1) % MAX;
 
-        pthread_mutex_unlock(&mutex);
-
-        sleep(1);
+        sem_post(&mutex);
+        sem_post(&empty);
     }
     return NULL;
 }
@@ -58,9 +52,10 @@ void* consumer(void* arg)
 int main()
 {
     pthread_t p, c;
-    srand(time(0));
 
-    pthread_mutex_init(&mutex, NULL);
+    sem_init(&empty, 0, MAX);
+    sem_init(&full, 0, 0);
+    sem_init(&mutex, 0, 1);
 
     pthread_create(&p, NULL, producer, NULL);
     pthread_create(&c, NULL, consumer, NULL);
@@ -68,7 +63,9 @@ int main()
     pthread_join(p, NULL);
     pthread_join(c, NULL);
 
-    pthread_mutex_destroy(&mutex);
+    sem_destroy(&empty);
+    sem_destroy(&full);
+    sem_destroy(&mutex);
 
     return 0;
 }

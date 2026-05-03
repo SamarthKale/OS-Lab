@@ -1,55 +1,91 @@
-// LRU Page Replacement
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int pages[50], f[10], last[10];
-    int n, size, faults=0, hits=0, timer=1;
+    int n, size, faults = 0, hits = 0, time = 0;
 
-    // ---------- INPUT ----------
-    printf("Enter reference string length: ");
+    printf("Enter number of pages: ");
     scanf("%d", &n);
+
     printf("Enter reference string:\n");
-    for(int i=0; i<n; i++) scanf("%d", &pages[i]);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &pages[i]);
+    }
+
     printf("Enter number of frames: ");
     scanf("%d", &size);
 
-    // Initialize frames and last used time to -1/0
-    for(int i=0; i<size; i++) { f[i]=-1; last[i]=0; }
+    // Initialize
+    for (int i = 0; i < size; i++)
+    {
+        f[i] = -1;
+        last[i] = -1;
+    }
 
-    // ---------- LRU LOGIC ----------
     printf("\nProcess:\n");
-    for(int i=0; i<n; i++) {
-        int hit=0;
 
-        // Check if page already in frame — Hit
-        for(int j=0; j<size; j++) {
-            if(f[j]==pages[i]) {
-                hit=1;
-                last[j]=timer++;  // update last used time
+    for (int i = 0; i < n; i++)
+    {
+        int hit = 0;
+
+        // Check for hit
+        for (int j = 0; j < size; j++)
+        {
+            if (f[j] == pages[i])
+            {
+                hit = 1;
+                last[j] = time++;
                 hits++;
                 break;
             }
         }
 
-        if(!hit) {
-            // Find least recently used frame (smallest last used time)
-            int lru=0;
-            for(int j=1; j<size; j++)
-                if(last[j]<last[lru]) lru=j;
+        // If fault → replace LRU
+        if (hit == 0)
+        {
+            int lru = 0;
 
-            // Replace LRU frame with new page
-            f[lru]=pages[i];
-            last[lru]=timer++;
+            for (int j = 1; j < size; j++)
+            {
+                if (last[j] < last[lru])
+                {
+                    lru = j;
+                }
+            }
+
+            f[lru] = pages[i];
+            last[lru] = time++;
             faults++;
         }
 
-        // Print current frame state
-        for(int j=0; j<size; j++) f[j]==-1 ? printf("- ") : printf("%d ", f[j]);
-        printf(hit ? "(Hit)\n" : "(Fault)\n");
+        // Print frames
+        for (int j = 0; j < size; j++)
+        {
+            if (f[j] == -1)
+            {
+                printf("- ");
+            }
+            else
+            {
+                printf("%d ", f[j]);
+            }
+        }
+
+        // Print Hit/Fault
+        if (hit)
+        {
+            printf("(Hit)\n");
+        }
+        else
+        {
+            printf("(Fault)\n");
+        }
     }
 
-    // ---------- RESULTS ----------
     printf("\nTotal Page Faults: %d\n", faults);
     printf("Total Hits: %d\n", hits);
-    printf("Hit Ratio: %.2f\n", (float)hits/n);
+
+    return 0;
 }
