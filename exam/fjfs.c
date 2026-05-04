@@ -56,28 +56,20 @@ int main() {
         printf("P%d\t%d %d %d %d\n",pid[i], at[i], bt[i], wt[i], tat[i]);
     }
 
-    // Gantt Chart (No Idle)
-    printf("\nGantt Chart:\n|");
+printf("\nGantt Chart:\n|");
 
-    for(i = 0; i < n; i++) {
-        printf(" P%d |", pid[i]);
-    }
-
-    printf("\n");
-
-    time = at[0];
-    printf("%d", time);
-
-    for(i = 0; i < n; i++) {
-        if(time < at[i]) {
-            time = at[i];
-        }
-
-        time += bt[i];
-        printf("   %d", time);
-    }
-
-    printf("\n");
-
-    return 0;
+for(i = 0; i < n; i++) {
+    printf(" P%d |", pid[i]);
 }
+
+printf("\n");
+
+time = 0;
+printf("%d", time);
+
+for(i = 0; i < n; i++) {
+    time += bt[i];
+    printf("   %d", time);
+}
+
+printf("\n");

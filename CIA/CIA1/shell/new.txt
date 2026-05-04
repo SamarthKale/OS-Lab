@@ -1,0 +1,30 @@
+12. DOS Interpreter:#!/bin/bash
+
+while true; do
+    read -p "DOS> " cmd a b
+
+    case "$cmd" in
+        cd) cd "$a" ;;
+        dir) ls ;;
+        type) cat "$a" ;;
+        del) rm "$a" ;;
+        ren) mv "$a" "$b" ;;
+        copy) cp "$a" "$b" ;;
+        exit) break ;;
+        *) echo "Invalid command" ;;
+    esac
+done
+
+
+#!/bin/bash
+
+for i in "$@"; do
+    if [ -f "$i" ]; then
+        echo "$i is a file"
+        wc -l < "$i"
+    elif [ -d "$i" ]; then
+        echo "$i is a directory"
+    else
+        echo "$i not found"
+    fi
+done

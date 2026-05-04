@@ -71,8 +71,7 @@ int main() {
     printf("\n\nProcess  AT  BT  WT  TAT\n");
     for (i = 0; i < n; i++) {
         tat[i] = wt[i] + bt[i];
-        printf("P%d\t  %d   %d   %d   %d\n",
-               i + 1, at[i], bt[i], wt[i], tat[i]);
+        printf("P%d\t  %d   %d   %d   %d\n",i + 1, at[i], bt[i], wt[i], tat[i]);
     }
 
     return 0;
